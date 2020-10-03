@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Photothinik Financial Expense Analyzer</title>
+    <link th:href="@{/styles/main.css}" rel="stylesheet" />
+</head>
+<body>
+
+
+    <div th:replace="~{fragments/header :: header}">Header</div>
+
+    <div style="float: left">
+        <div th:replace="~{fragments/menu :: menu}">Menu</div>
+    </div>
+
+    <p th:text="'This app is the ' + ${appName} + '!'" />
+
+    <div style="clear: both;"></div>
+
+    <div th:replace="~{fragments/footer :: footer}">Footer</div>
+
+</body>
+</html>
