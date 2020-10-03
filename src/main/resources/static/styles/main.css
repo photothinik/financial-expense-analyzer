@@ -10,6 +10,25 @@
     color: rgb(255,242,0);
 }
 
+.pagebody {
+    display: block;
+    margin: 15px;
+}
+
+.pageheader {
+    display: block;
+    font-family: arial;
+    font-size: 16pt;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.categorymain {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 5px solid rgb(196,233,242);
+}
+
 ul.menu {
     width: 200px;
     font-family: arial;
@@ -17,6 +36,7 @@ ul.menu {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    padding-right: 15px;
 }
 
 ul.menu a {
