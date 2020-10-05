@@ -4,6 +4,105 @@
     <meta charset="UTF-8">
     <title>Financial Expense Analyzer</title>
     <link th:href="@{/styles/main.css}" rel="stylesheet" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+            var categoriesObj = /*[[${categories}]]*/ null;
+        /*]]>*/
+
+    </script>
+
+    <script type="text/javascript">
+
+function createNewCategory() {
+    document.getElementById('createCategoryPanel').style.display="inline";
+    document.getElementById('newCategoryNameId').focus();
+    document.getElementById('createCategoryPanelButton').style.display="none";
+}
+
+function createNewCategorySubmit() {
+}
+
+function categoryDelete(catId, objIndex) {
+    if( confirm('Are you sure you want to delete category ' + categoriesObj[objIndex].name + '?') ) {
+
+        var originalColor = document.getElementById('cat' + objIndex + 'panel').style.backgroundColor;
+        document.getElementById('cat' + objIndex + 'panel').style.backgroundColor="rgb(221,221,221)";
+
+
+        $.ajax(
+        {
+            type: "DELETE",
+            contentType: "application/json",
+            data: JSON.stringify(categoriesObj[objIndex]),
+            dataType: 'json',
+            url: "/api/categoryupdate",
+            cache: false,
+            success: function(result){
+                document.getElementById('cat' + objIndex + 'panel').remove();
+
+
+            },
+            error: function(result){
+                alert('Unable to delete category \'' + categoriesObj[objIndex].name + '\'. Please try again.');
+                document.getElementById('cat' + objIndex + 'panel').style.backgroundColor=originalColor;
+            }
+        }
+        );
+
+    }
+}
+
+function categoryEditModeOn(catId) {
+    document.getElementById(catId + '_title').style.display="none";
+    document.getElementById(catId + '_titleedit').style.display="inline";
+    document.getElementById(catId + '_titleedittext').focus();
+    document.getElementById(catId + '_titleedittext').select();
+}
+
+function categoryNameChanged(catId, objIndex) {
+
+    var originalName=document.getElementById('cat' + catId + 'val').value;
+    var newName=document.getElementById(catId + '_titleedittext').value;
+
+    document.getElementById(catId + '_title').innerHTML=newName;
+
+    document.getElementById(catId + '_title').style.display="inline";
+
+    var titleOriginalBackgroundColor = document.getElementById(catId + '_title').style.backgroundColor;
+
+    document.getElementById(catId + '_title').style.backgroundColor="rgb(221,221,221)";
+    document.getElementById(catId + '_titleedit').style.display="none";
+
+    categoriesObj[objIndex].name=newName;
+
+    $.ajax(
+        {
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(categoriesObj[objIndex]),
+            dataType: 'json',
+            url: "/api/categoryupdate",
+            cache: false,
+            success: function(result){
+                document.getElementById('cat' + catId + 'val').value=newName;
+                document.getElementById(catId + '_title').style.backgroundColor=titleOriginalBackgroundColor;
+            },
+            error: function(result){
+                alert('Unable to update category name from \'' + originalName + '\' to \''+ newName + '\'. Please try again.');
+                document.getElementById(catId + '_title').innerHTML=originalName;
+                document.getElementById(catId + '_title').style.backgroundColor=titleOriginalBackgroundColor;
+            }
+        }
+    );
+
+
+
+}
+    </script>
+
 </head>
 <body>
 
@@ -19,9 +118,64 @@
         Categories
     </div>
 
-    <div class="categorymain" th:each="category: ${categories}">
-        <div th:text="${category.name}" />
+    <form id="categoryCreate" action="#" th:action="@{/categories}" th:object="${newCategory}" method="post" >
+        <div onclick="javascript:createNewCategory()" id="createCategoryPanelButton" class="createCategoryPanelButtonStyle">
+            <img style="cursor: pointer;" src="../images/add-1-icon.png" th:src="@{/images/add-1-icon.png}" alt="[Create New]" title="Create New Category"/>
+        </div>
+
+        <div id="createCategoryPanel" class="createcategorypanel">
+
+            Name:&nbsp;<input id="newCategoryNameId" type="text" th:field="*{name}" />
+            <button>Create</button>
+        </div>
+    </form>
+
+    <form id="categoryForm" action="#" th:action="@{/api/categoryupdate}" th:object="${category}" method="post">
+
+
+
+
+    <div class="categorymain" th:each="category,iter: ${categories}" th:attr="id=|cat${iter.index}panel|">
+        <div>
+
+        <input
+                type="hidden"
+                th:attr="id=|cat${category.id}val|,name=|cat${category.id}valname|,value=|${category.name}|"
+        />
+        <div class="categorysubtitle" th:attr="id=|${category.id}_title|" th:text="${category.name}" />
+        <div style="display: none;" th:attr="id=|${category.id}_titleedit|">
+            <input
+                    class="categorysubtitleedittext"
+                    type="text"
+                    th:value="${category.name}"
+                    th:attr="id=|${category.id}_titleedittext|"
+                    th:attrappend="onblur=|javascript:categoryNameChanged(${category.id}, ${iter.index})|"
+            />
+        </div>
+
+        <div class="categoryedit" th:attr="onclick=|javascript:categoryEditModeOn(${category.id})|">
+            <img src="../images/pencil-icon.png" th:src="@{/images/pencil-icon.png}" alt="[Edit]" title="Edit Category"/>
+        </div>
+        <div class="categoryedit" th:attr="onclick=|javascript:categoryDelete(${category.id}, ${iter.index})|">
+            <img src="../images/trash-empty-icon.png" th:src="@{/images/trash-empty-icon.png}" alt="[Delete]" title="Delete Category"/>
+        </div>
+
+        <div class="categorypatternsbody">
+            <div class="categorypatterntitle">Patterns:</div>
+            <div>
+                Add Pattern: <input type="text" class="categoryPatternInputText" />
+                <button type="button">Add</button>
+            </div>
+
+            <!-- <div class="categorypattern" th:each="${patterns}" /> -->
+
+        </div>
+
+        </div>
+
     </div>
+
+    </form>
 
 </div>
 

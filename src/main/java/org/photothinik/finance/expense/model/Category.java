@@ -6,10 +6,10 @@ import javax.persistence.*;
 public class Category {
 
     @Id
-    @GeneratedValue(generator = "stock_order_seq", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = "category_seq", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(
-            name = "stock_order_seq",
-            sequenceName = "stock_order_seq",
+            name = "category_seq",
+            sequenceName = "category_seq",
             allocationSize = 50
     )
     private Long id;
@@ -34,5 +34,13 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
