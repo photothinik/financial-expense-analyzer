@@ -1,6 +1,7 @@
 package org.photothinik.finance.expense.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Category {
@@ -16,6 +17,10 @@ public class Category {
 
     @Column(nullable = false)
     private String name;
+
+    @OneToMany
+    @JoinColumn(name = "category_id")
+    private Set<CategoryPattern> patterns;
 
     public Category() {
     }
@@ -36,11 +41,20 @@ public class Category {
         this.name = name;
     }
 
+    public Set<CategoryPattern> getPatterns() {
+        return patterns;
+    }
+
+    public void setPatterns(Set<CategoryPattern> patterns) {
+        this.patterns = patterns;
+    }
+
     @Override
     public String toString() {
         return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", patterns=" + patterns +
                 '}';
     }
 }

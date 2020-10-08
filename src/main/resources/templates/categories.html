@@ -16,6 +16,71 @@
 
     <script type="text/javascript">
 
+function deleteCategoryPattern(patternId) {
+
+    var patternNode = document.getElementById('catpatternid' + patternId);
+
+    if( confirm('Are you sure you want to delete pattern ' + patternNode.innerHTML + '?') ) {
+
+
+        var originalColor = patternNode.style.backgroundColor;
+        patternNode.style.backgroundColor="rgb(221,221,221)";
+
+        $.ajax(
+        {
+            type: "DELETE",
+            contentType: "application/json",
+            data: '{"id":'+patternId+', "pattern":"empty"}',
+            dataType: 'json',
+            url: "/api/categorypatterndelete",
+            cache: false,
+            success: function(result){
+                patternNode.remove();
+            },
+            error: function(result){
+                alert('Unable to delete pattern \'' + patternNode.innerHTML + '\'. Please try again.');
+                patternNode.style.backgroundColor=originalColor;
+
+            }
+        }
+        );
+
+    }
+
+}
+
+function addCategoryPattern(catId, objIndex) {
+
+    var newPattern = document.getElementById('cat'+objIndex+'newpatterntext').value;
+
+    var node = document.createElement("div");
+    node.className = 'categorypatternunverified';
+    node.innerHTML = newPattern;
+    document.getElementById('category'+objIndex+'patternpanel').appendChild(node);
+
+    $.ajax(
+        {
+            type: "PUT",
+            contentType: "application/json",
+            data: '{"pattern":"'+newPattern+'", "categoryId":'+catId+'}',
+            dataType: 'json',
+            url: "/api/categorypatterncreate",
+            cache: false,
+            success: function(result){
+                node.className = 'categorypattern';
+                node.id = 'catpatternid' + result.id;
+                document.getElementById('cat'+objIndex+'newpatterntext').value = "";
+            },
+            error: function(result){
+                alert('Unable to add pattern \'' + newPattern + '\'. Please try again.');
+                document.getElementById('category'+objIndex+'patternpanel').removeChild(node);
+                document.getElementById('cat'+objIndex+'newpatterntext').value = newPattern;
+            }
+        }
+        );
+
+}
+
 function createNewCategory() {
     document.getElementById('createCategoryPanel').style.display="inline";
     document.getElementById('newCategoryNameId').focus();
@@ -163,11 +228,13 @@ function categoryNameChanged(catId, objIndex) {
         <div class="categorypatternsbody">
             <div class="categorypatterntitle">Patterns:</div>
             <div>
-                Add Pattern: <input type="text" class="categoryPatternInputText" />
-                <button type="button">Add</button>
+                Add Pattern: <input type="text" class="categoryPatternInputText" th:attr="id=|cat${iter.index}newpatterntext|" />
+                <button type="button" th:attr="onclick=|javascript:addCategoryPattern(${category.id}, ${iter.index})|">Add</button>
             </div>
 
-            <!-- <div class="categorypattern" th:each="${patterns}" /> -->
+            <div th:attr="id=|category${iter.index}patternpanel|">
+                <div class="categorypattern" th:each="pattern: ${category.patterns}" th:text="${pattern.pattern}" th:attr="id=|catpatternid${pattern.id}|,onclick=|javascript:deleteCategoryPattern(${pattern.id})|" />
+            </div>
 
         </div>
 

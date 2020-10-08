@@ -92,6 +92,7 @@
 .categorypatternsbody {
     margin-top: 10px;
     margin-left: 30px;
+    width: 90%;
 }
 
 .categorypatterntitle {
@@ -105,8 +106,26 @@
     border: 1px solid rgb(0,162,232);
     border-radius: 3px;
     background-color: rgb(66,199,255);
+    padding: 3px;
     margin-left: 10px;
-    display: inline;
+    margin-top: 5px;
+    display: inline-block;
+
+}
+
+.categorypattern:hover {
+    border: 1px solid rgb(0,162,232);
+    background-color: rgb(26,159,255);
+    cursor: pointer;
+}
+
+.categorypatternunverified {
+    border-radius: 3px;
+    padding: 3px;
+    background-color: yellow;
+    margin-left: 10px;
+    margin-top: 5px;
+    display: inline-block;
 
 }
 
