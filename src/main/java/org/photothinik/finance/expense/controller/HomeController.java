@@ -42,4 +42,12 @@ public class HomeController {
         return "categories";
     }
 
+    @GetMapping("/data")
+    public String dataLoad(Model model) {
+
+
+
+        return "data";
+    }
+
 }

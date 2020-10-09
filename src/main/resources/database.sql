@@ -14,3 +14,14 @@ create table category_pattern (
     category_id int not null,
     pattern varchar(255) not null
 )
+
+CREATE SEQUENCE exp_record_seq INCREMENT 50;
+
+create table expense_record (
+    id serial primary key,
+    transaction_dt date not null,
+    description varchar(255) not null,
+    check_number int,
+    amount float,
+    category_override int
+)
