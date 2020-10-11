@@ -8,17 +8,90 @@
 <body>
 
 
-    <div th:replace="~{fragments/header :: header}">Header</div>
+<div th:replace="~{fragments/header :: header}">Header</div>
 
-    <div style="float: left">
-        <div th:replace="~{fragments/menu :: menu}">Menu</div>
+<div style="float: left">
+    <div th:replace="~{fragments/menu :: menu}">Menu</div>
+</div>
+
+<div class="pagebody">
+    <div class="pageheader">
+        Summary
     </div>
 
-    <p th:text="'This app is the ' + ${appName} + '!'" />
+    <div class="selectTimePeriodPanel">
 
-    <div style="clear: both;"></div>
+        <form id="selectTimePeriod" action="#" th:action="@{/}" th:object="${selectedReport}" method="post" >
+            Select report period:
+            <select class="" th:field="*{monthOfYear}">
+                <option th:each="month : ${availableMonths}" th:value="${month.year + '/' + month.month + '/1'}" th:text="${month.month + '-' + month.year}" />
+            </select>
+            <button type="submit" class="standardButton">Go</button>
+        </form>
 
-    <div th:replace="~{fragments/footer :: footer}">Footer</div>
+    </div>
+
+    <div class="reportPanel">
+        <div th:if="${report ne null}">
+
+            <div class="reportErrorsPanel">
+                <div class="reportError" th:each="warning : ${report.warnings}" th:text="${warning}" />
+            </div>
+
+            <div class="reportCategoryPanel" th:each="map : ${report.expenseRecordsByCategory}">
+
+                <div class="reportCategoryHeadingRow">
+                    <div class="reportCategoryHeading" th:text="${map.key.name}" />
+                    <div class="reportCategorySubtotalHeading" th:text="${report.categoriesBySubtotal.get(map.key)}" />
+                    <div style="clear: both"></div>
+                </div>
+
+                <div class="reportCategoryBody">
+                    <div class="reportCategoryRecordPanel" th:each="record : ${map.value}">
+
+                        <div class="recordItemTrDt" th:text="${record.transactionDate}" />
+
+                        <div class="recordItemDesc" th:text="${record.description}" />
+
+                        <div class="recordItemAmt" th:text="${record.amount}" />
+
+                        <div class="recordItemChkNum" th:text="${record.checkNumber}" />
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="reportCategoryPanel">
+                <div class="reportCategoryHeadingRow">
+                    <div class="reportCategoryHeading" th:text="${'Uncategorized'}" />
+                    <div class="reportCategorySubtotalHeading" th:text="${report.unmatchedSubtotal}" />
+                    <div style="clear: both"></div>
+                </div>
+
+                <div class="reportCategoryBody">
+                    <div class="reportCategoryRecordPanel" th:each="record : ${report.uncategorized}">
+
+                        <div class="recordItemTrDt" th:text="${record.transactionDate}" />
+
+                        <div class="recordItemDesc" th:text="${record.description}" />
+
+                        <div class="recordItemAmt" th:text="${record.amount}" />
+
+                        <div class="recordItemChkNum" th:text="${record.checkNumber}" />
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div style="clear: both;"></div>
+
+<div th:replace="~{fragments/footer :: footer}">Footer</div>
 
 </body>
 </html>

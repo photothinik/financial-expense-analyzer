@@ -16,8 +16,69 @@
 
 <div class="pagebody">
     <div class="pageheader">
-        Load Data
+        Data Entry
+
+        <form id="addExpenseFormId" action="#" th:action="@{/data}" th:object="${newExpenseRecord}" method="post" >
+            <div class="dataEntryPanel">
+
+                <div class="dataEntryError">
+                    <span th:if="${errorMsg ne null}" th:text="${errorMsg}" />
+                </div>
+
+                <div class="dataEntryLabel">
+                    <div>Date</div>
+                    <input class="dataEntryDateOfTr" type="text" th:field="*{transactionDate}" title="Date of transaction" />
+                </div>
+                <div class="dataEntryLabel">
+                    <div>Description</div>
+                    <input class="dataEntryDesc" type="text" th:field="*{description}"  title="Description of transaction" />
+                </div>
+                <div class="dataEntryLabel">
+                    <div>Check<br />Number</div>
+                    <input class="dataEntryCheckNum" type="text" th:field="*{checkNumber}"  title="Check number used in transaction" />
+                </div>
+                <div class="dataEntryLabel">
+                    <div>Amount</div>
+                    <input class="dataEntryAmt" type="text" th:field="*{amount}"  title="Amount of transaction" />
+                </div>
+                <div class="dataEntryLabel">
+                    <div>Category</div>
+                    <select class="dataEntryCatOver" th:field="*{categoryIdOverride}"  title="Category to assign to">
+                        <option value="-1">Automatic</option>
+                        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}" />
+                    </select>
+                </div>
+                <div class="dataEntryLabel">
+                    <button type="submit" class="standardButton">Add</button>
+                </div>
+
+
+
+
+            </div>
+        </form>
+
     </div>
+
+    <hr />
+
+    <div class="pageheader">
+        Upload Data File
+    </div>
+
+    <div>
+        <div>
+            Select file:
+        </div>
+        <div>
+            Select interpreter:
+            <select>
+                <option value="-1">A</option>
+            </select>
+        </div>
+
+    </div>
+
 </div>
 
 <div style="clear: both;"></div>

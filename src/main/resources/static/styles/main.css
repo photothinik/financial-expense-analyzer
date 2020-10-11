@@ -24,6 +24,113 @@
     margin-bottom: 15px;
 }
 
+.standardButton {
+    background-color: red;
+    padding: 10px;
+    font-family: arial;
+    font-size: 12pt;
+    font-weight: bold;
+    border: none;
+    border-radius: 3px;
+}
+
+.selectTimePeriodPanel select {
+    width: 200px;
+    padding: 5px;
+    font-family: arial;
+    font-size: 12pt;
+}
+
+.selectTimePeriodPanel {
+    font-family: arial;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+
+.reportPanel {
+    padding-left: 20px;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid black;
+}
+
+.reportErrorsPanel {
+    border-radius: 5px;
+    background-color: rgba(237,28,36,.5);
+    font-family: arial;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+.reportError {
+}
+
+.reportCategoryPanel {
+    width: 60%;
+}
+
+.reportCategoryHeadingRow {
+    color: yellow;
+    background-color: rgb(100,130,170);
+    padding: 3px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.reportCategoryHeadingRow:hover {
+    background-color: rgb(80,120,150);
+}
+
+.reportCategoryHeading {
+
+    font-family: arial;
+    font-size: 14pt;
+    font-weight: bold;
+    float: left;
+}
+
+.reportCategorySubtotalHeading {
+
+    font-family: arial;
+    font-size: 14pt;
+    font-weight: bold;
+    text-align: right;
+    float: right;
+}
+
+.reportCategoryBody {
+    margin-left: 10px;
+}
+
+.reportCategoryRecordPanel {
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 3px;
+    margin: 2px;
+}
+
+.recordItemTrDt {
+    display: inline-block;
+    width: 200px;
+}
+
+.recordItemDesc {
+    display: inline-block;
+    width: 350px;
+}
+
+.recordItemAmt {
+    display: inline-block;
+    width: 100px;
+}
+
+.recordItemChkNum {
+    display: inline-block;
+    width: 100px;
+}
+
+
 .createcategorypanel {
     display: none;
 }
@@ -127,6 +234,74 @@
     margin-top: 5px;
     display: inline-block;
 
+}
+
+.dataEntryPanel {
+
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+
+
+}
+
+.dataEntryError {
+    font-family: arial;
+    font-size: 10pt;
+    font-weight: bold;
+    color: red;
+}
+
+.dataEntryPanel button {
+    background-color: red;
+    padding: 10px;
+    font-family: arial;
+    font-size: 12pt;
+    font-weight: bold;
+    border: none;
+    border-radius: 3px;
+}
+
+.dataEntryLabel {
+    display: inline-block;
+    font-family: arial;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+.dataEntryDateOfTr {
+    width: 100px;
+    padding: 5px;
+    font-family: arial;
+    font-size: 12pt;
+}
+
+.dataEntryDesc {
+    width: 200px;
+    padding: 5px;
+    font-family: arial;
+    font-size: 12pt;
+}
+
+.dataEntryCheckNum {
+    width: 50px;
+    padding: 5px;
+    font-family: arial;
+    font-size: 12pt;
+}
+
+.dataEntryAmt {
+    width: 80px;
+    padding: 5px;
+    font-family: arial;
+    font-size: 12pt;
+}
+
+.dataEntryCatOver {
+    width: 200px;
+    padding: 5px;
+    font-family: arial;
+    font-size: 12pt;
 }
 
 ul.menu {

@@ -22,6 +22,6 @@ create table expense_record (
     transaction_dt date not null,
     description varchar(255) not null,
     check_number int,
-    amount float,
+    amount varchar(15) not null,
     category_override int
 )
