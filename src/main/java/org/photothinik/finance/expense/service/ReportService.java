@@ -8,6 +8,7 @@ import org.photothinik.finance.expense.model.reportselection.ReportSelection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.NumberFormat;
 import java.util.*;
 
 @Service
@@ -59,6 +60,13 @@ public class ReportService {
                 if( result.getExpenseRecordsByCategory().get(overrideCategory) == null)
                     result.getExpenseRecordsByCategory().put(overrideCategory, new ArrayList<>());
                 result.getExpenseRecordsByCategory().get(overrideCategory).add(record);
+
+                // Include in subtotal
+                if( subtotalsMap.get(overrideCategory) == null)
+                    subtotalsMap.put(overrideCategory, new Float(Float.valueOf(record.getAmount())));
+                else
+                    subtotalsMap.put(overrideCategory, subtotalsMap.get(overrideCategory).floatValue() + Float.valueOf(record.getAmount()));
+
                 continue;
             }
 
@@ -104,8 +112,11 @@ public class ReportService {
         }
 
         // Convert subtotal map
+
+        NumberFormat defaultFormat = NumberFormat.getCurrencyInstance();
+
         for(Category c : subtotalsMap.keySet()) {
-            result.getCategoriesBySubtotal().put(c, String.valueOf("$" + subtotalsMap.get(c)));
+            result.getCategoriesBySubtotal().put(c, defaultFormat.format(subtotalsMap.get(c)));
         }
 
         result.setUnmatchedSubtotal(new Float(unmatchedSubtotal));
