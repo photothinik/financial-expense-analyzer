@@ -4,6 +4,32 @@
     <meta charset="UTF-8">
     <title>Financial Expense Analyzer</title>
     <link th:href="@{/styles/main.css}" rel="stylesheet" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script th:inline="javascript">
+function assignCategory(expenseId) {
+
+    var selectObj = document.getElementById('catOverride' + expenseId);
+    var categoryId = selectObj.value;
+
+    $.ajax(
+        {
+            type: "GET",
+            url: "/api/categoryoverride?expenseid="+expenseId+"&categoryid=" + categoryId,
+            cache: false,
+            success: function(result){
+                alert('Update successful');
+            },
+            error: function(result){
+                alert('Unable to assign category override. Please try again.');
+            }
+        }
+    );
+
+}
+    </script>
+
 </head>
 <body>
 
@@ -41,9 +67,8 @@
             <div class="reportCategoryPanel" th:each="map : ${report.expenseRecordsByCategory}">
 
                 <div class="reportCategoryHeadingRow">
-                    <div class="reportCategoryHeading" th:text="${map.key.name}" />
-                    <div class="reportCategorySubtotalHeading" th:text="${report.categoriesBySubtotal.get(map.key)}" />
-                    <div style="clear: both"></div>
+                    <span class="reportCategoryHeading" th:text="${map.key.name}" />
+                    <span class="reportCategorySubtotalHeading" th:text="${report.categoriesBySubtotal.get(map.key)}" />
                 </div>
 
                 <div class="reportCategoryBody">
@@ -57,6 +82,18 @@
 
                         <div class="recordItemChkNum" th:text="${record.checkNumber}" />
 
+                        <div class="recordItemAssignTo">
+                            Override Category:
+                            <select th:id="${'catOverride'+record.id}" th:attr="onchange=|javascript:assignCategory(${record.id})|">
+                                <option value="-1">&nbsp;</option>
+                                <option
+                                        th:each="assignCategory : ${categories}"
+                                        th:value="${assignCategory.id}"
+                                        th:text="${assignCategory.name}"
+                                />
+                            </select>
+                        </div>
+
                     </div>
                 </div>
 
@@ -64,9 +101,8 @@
 
             <div class="reportCategoryPanel">
                 <div class="reportCategoryHeadingRow">
-                    <div class="reportCategoryHeading" th:text="${'Uncategorized'}" />
-                    <div class="reportCategorySubtotalHeading" th:text="${report.unmatchedSubtotal}" />
-                    <div style="clear: both"></div>
+                    <span class="reportCategoryHeading" th:text="${'Uncategorized'}" />
+                    <span class="reportCategorySubtotalHeading" th:text="${report.unmatchedSubtotal}" />
                 </div>
 
                 <div class="reportCategoryBody">
@@ -79,6 +115,18 @@
                         <div class="recordItemAmt" th:text="${record.amount}" />
 
                         <div class="recordItemChkNum" th:text="${record.checkNumber}" />
+
+                        <div class="recordItemAssignTo">
+                            Override Category:
+                            <select th:id="${'catOverride'+record.id}" th:attr="onchange=|javascript:assignCategory(${record.id})|">
+                                <option value="-1">&nbsp;</option>
+                                <option
+                                        th:each="assignCategory : ${categories}"
+                                        th:value="${assignCategory.id}"
+                                        th:text="${assignCategory.name}"
+                                />
+                            </select>
+                        </div>
 
                     </div>
                 </div>

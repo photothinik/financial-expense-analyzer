@@ -2,14 +2,13 @@ package org.photothinik.finance.expense.controller;
 
 import org.photothinik.finance.expense.model.Category;
 import org.photothinik.finance.expense.model.CategoryPattern;
+import org.photothinik.finance.expense.model.ExpenseRecord;
 import org.photothinik.finance.expense.service.CategoryPatternService;
 import org.photothinik.finance.expense.service.CategoryService;
+import org.photothinik.finance.expense.service.ExpenseRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
@@ -20,12 +19,30 @@ public class RestController {
     @Autowired
     private CategoryPatternService categoryPatternService;
 
+    @Autowired
+    private ExpenseRecordService expenseRecordService;
+
     @PostMapping("/api/categoryupdate")
     public ResponseEntity<?> updateCategory(@RequestBody Category category) {
 
         this.categoryService.save(category);
 
         return ResponseEntity.ok(category);
+    }
+
+    @GetMapping("/api/categoryoverride")
+    public ResponseEntity<?> expenseCategoryOverride(
+            @RequestParam("expenseid") Long expenseId,
+            @RequestParam("categoryid") Long categoryId
+    ) {
+
+        ExpenseRecord er = this.expenseRecordService.getById(expenseId);
+
+        er.setCategoryIdOverride(categoryId);
+
+        this.expenseRecordService.save(er);
+
+        return ResponseEntity.ok(er);
     }
 
     @DeleteMapping("/api/categoryupdate")

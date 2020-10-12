@@ -44,6 +44,10 @@ public class ExpenseRecordService {
         if( e.getCategoryIdOverride() != null && e.getCategoryIdOverride().longValue() == -1)
             e.setCategoryIdOverride(null);
 
+        // Set upper case
+        e.setDescription(e.getDescription().toUpperCase());
+
+        // Save
         this.expenseRecordRepository.save(e);
         return e;
     }

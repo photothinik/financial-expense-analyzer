@@ -66,15 +66,57 @@
         Upload Data File
     </div>
 
-    <div>
-        <div>
-            Select file:
-        </div>
-        <div>
-            Select interpreter:
-            <select>
-                <option value="-1">A</option>
-            </select>
+    <div class="fileUploadSelectPanel">
+        <form id="uploadFileForm" action="#" th:action="@{/dataupload}" enctype="multipart/form-data" method="post">
+
+            <div class="dataEntryError">
+                <span th:if="${uploadError ne null}" th:text="${uploadError}" />
+            </div>
+
+            <div class="fileUploadFileSelect">
+                Select file:
+                <input type="file" id="recordsFile" name="recordsFile">
+            </div>
+            <div class="fileUploadSelectInterpreter">
+                Select interpreter:
+                <select>
+                    <option value="0">Fifth Third Exported Transaction CSV File</option>
+                </select>
+            </div>
+            <div>
+                <button type="submit" class="standardButton">Upload</button>
+            </div>
+
+        </form>
+
+        <div class="importPreviewPanel" th:if="${preview ne null}">
+
+            <form id="approveImportId" action="#" th:action="@{/dataapprove}" th:object="${preview}" method="post" >
+
+                <input type="hidden" th:field="${preview}" />
+
+                <div class="dataEntryError">
+                    <div th:each="warning : ${preview.warnings}" th:text="${warning}" />
+                </div>
+
+                <div class="reportCategoryRecordPanel" th:each="record : ${preview.records}">
+
+                    <div class="recordItemTrDt" th:text="${record.transactionDate}" />
+
+                    <div class="recordItemDesc" th:text="${record.description}" />
+
+                    <div class="recordItemAmt" th:text="${record.amount}" />
+
+                    <div class="recordItemChkNum" th:text="${record.checkNumber}" />
+
+                </div>
+
+                <div>
+                    <!-- <button type="submit" class="standardButton">Import Data</button> -->
+                </div>
+
+            </form>
+
         </div>
 
     </div>

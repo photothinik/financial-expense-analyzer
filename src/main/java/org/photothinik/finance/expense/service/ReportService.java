@@ -8,10 +8,7 @@ import org.photothinik.finance.expense.model.reportselection.ReportSelection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ReportService {
@@ -24,6 +21,17 @@ public class ReportService {
 
     @Autowired
     private CategoryService categoryService;
+
+    private boolean isDateInRSRange(Date date, ReportSelection rs) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        if( calendar.get(Calendar.YEAR) == rs.getMonthOfYear().getYear().intValue() && (calendar.get(Calendar.MONTH)+ 1) == rs.getMonthOfYear().getMonth())
+            return true;
+
+        return false;
+    }
 
     public Report getReport(ReportSelection rs) {
 
@@ -40,6 +48,9 @@ public class ReportService {
 
         // Match records up by category
         for(ExpenseRecord record : allRecords) {
+
+            if( !isDateInRSRange(record.getTransactionDate(), rs))
+                continue;
 
             // Check for override
             if( record.getCategoryIdOverride() != null)

@@ -73,9 +73,13 @@
 .reportCategoryHeadingRow {
     color: yellow;
     background-color: rgb(100,130,170);
+    border-radius: 5px;
     padding: 3px;
     margin-top: 10px;
     margin-bottom: 5px;
+    font-family: arial;
+    font-size: 14pt;
+    font-weight: bold;
 }
 
 .reportCategoryHeadingRow:hover {
@@ -83,20 +87,12 @@
 }
 
 .reportCategoryHeading {
-
-    font-family: arial;
-    font-size: 14pt;
-    font-weight: bold;
-    float: left;
+    display: inline-block;
+    width: 300px;
 }
 
 .reportCategorySubtotalHeading {
-
-    font-family: arial;
-    font-size: 14pt;
-    font-weight: bold;
-    text-align: right;
-    float: right;
+    display: inline-block;
 }
 
 .reportCategoryBody {
@@ -128,6 +124,11 @@
 .recordItemChkNum {
     display: inline-block;
     width: 100px;
+}
+
+.recordItemAssignTo {
+    display: inline-block;
+    width: 150px;
 }
 
 
@@ -302,6 +303,28 @@
     padding: 5px;
     font-family: arial;
     font-size: 12pt;
+}
+
+.fileUploadSelectPanel {
+    margin-left: 30px;
+    padding: 10px;
+    font-family: arial;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+.fileUploadFileSelect {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.fileUploadSelectInterpreter {
+    margin-bottom: 5px;
+}
+
+.importPreviewPanel {
+    margin-top: 10px;
+    margin-left: 10px;
 }
 
 ul.menu {
