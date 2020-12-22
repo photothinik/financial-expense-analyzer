@@ -1,4 +1,4 @@
-package org.photothinik.finance.expense.model.reportselection;
+package org.photothinik.finance.expense.model.calendar;
 
 import java.util.Calendar;
 import java.util.Date;

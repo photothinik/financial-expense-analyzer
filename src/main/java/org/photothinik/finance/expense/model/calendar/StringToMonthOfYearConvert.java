@@ -1,4 +1,4 @@
-package org.photothinik.finance.expense.model.reportselection;
+package org.photothinik.finance.expense.model.calendar;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

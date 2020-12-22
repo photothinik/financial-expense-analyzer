@@ -1,8 +1,10 @@
 package org.photothinik.finance.expense.controller;
 
 import org.photothinik.finance.expense.model.Category;
+import org.photothinik.finance.expense.model.DataCleanup;
 import org.photothinik.finance.expense.model.ExpenseRecord;
 import org.photothinik.finance.expense.model.ImportPreview;
+import org.photothinik.finance.expense.model.calendar.MonthOfYear;
 import org.photothinik.finance.expense.model.reportselection.ReportSelection;
 import org.photothinik.finance.expense.service.CategoryService;
 import org.photothinik.finance.expense.service.ExpenseRecordService;
@@ -84,8 +86,26 @@ public class HomeController {
     @GetMapping("/data")
     public String dataLoad(Model model) {
 
+        model.addAttribute("availableMonths", this.expenseRecordService.getMonthsWithData());
         model.addAttribute("categories", this.categoryService.getAllCategories());
         model.addAttribute("newExpenseRecord", new ExpenseRecord());
+        model.addAttribute("dataCleanup", new DataCleanup());
+
+        return "data";
+    }
+
+    @PostMapping("/dataDeleteMonth")
+    public String deleteMonth(@ModelAttribute DataCleanup dataCleanup, Model model) {
+
+        model.addAttribute("categories", this.categoryService.getAllCategories());
+        model.addAttribute("newExpenseRecord", new ExpenseRecord());
+        model.addAttribute("dataCleanup", new DataCleanup());
+
+        // Delete
+        this.expenseRecordService.deleteRecordsByMonth(dataCleanup.getMonthToDelete());
+
+        // Populate available months
+        model.addAttribute("availableMonths", this.expenseRecordService.getMonthsWithData());
 
         return "data";
     }
@@ -113,6 +133,7 @@ public class HomeController {
 
         model.addAttribute("categories", this.categoryService.getAllCategories());
         model.addAttribute("newExpenseRecord", new ExpenseRecord());
+        model.addAttribute("dataCleanup", new DataCleanup());
 
         if( file.isEmpty()) {
             model.addAttribute("uploadError", "The uploaded file was empty");
@@ -154,6 +175,7 @@ public class HomeController {
     public String addExpenseRecord(@ModelAttribute ExpenseRecord expenseRecord, Model model) {
 
         model.addAttribute("categories", this.categoryService.getAllCategories());
+        model.addAttribute("dataCleanup", new DataCleanup());
 
 
         try {

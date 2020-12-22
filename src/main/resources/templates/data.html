@@ -15,6 +15,25 @@
 </div>
 
 <div class="pagebody">
+
+    <div class="pageheader">
+        Data Cleanup
+    </div>
+
+    <div class="deleteMonthPanel">
+        <form id="deleteTimePeriod" action="#" th:action="@{/dataDeleteMonth}" th:object="${dataCleanup}" method="post"
+              onsubmit="return confirm('This operation cannot be undone. Are you sure?');">
+            Select month to delete:
+            <select class="dataEntryCatOver" th:name="monthToDelete">
+                <option th:each="month : ${availableMonths}" th:value="${month.year + '/' + month.month + '/1'}" th:text="${month.month + '-' + month.year}" />
+            </select>
+            <button type="submit" class="standardButton">Delete</button>
+        </form>
+    </div>
+
+
+    <hr />
+
     <div class="pageheader">
         Data Entry
 

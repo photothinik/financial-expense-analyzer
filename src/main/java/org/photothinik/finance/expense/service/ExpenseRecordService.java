@@ -2,13 +2,11 @@ package org.photothinik.finance.expense.service;
 
 import org.photothinik.finance.expense.model.Category;
 import org.photothinik.finance.expense.model.ExpenseRecord;
-import org.photothinik.finance.expense.model.reportselection.MonthOfYear;
+import org.photothinik.finance.expense.model.calendar.MonthOfYear;
 import org.photothinik.finance.expense.repository.ExpenseRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Month;
-import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -27,6 +25,23 @@ public class ExpenseRecordService {
 
             if( !result.contains(m))
                 result.add(m);
+        }
+
+        return result;
+    }
+
+    public List<ExpenseRecord> deleteRecordsByMonth(MonthOfYear month) {
+        List<ExpenseRecord> result = new ArrayList<>();
+
+        List<ExpenseRecord> allRecords = this.expenseRecordRepository.findAll();
+        for( ExpenseRecord e : allRecords) {
+
+            MonthOfYear m = new MonthOfYear(e.getTransactionDate());
+
+            if( m.equals(month)) {
+                result.add(e);
+                delete(e);
+            }
         }
 
         return result;

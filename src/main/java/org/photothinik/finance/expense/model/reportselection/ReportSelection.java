@@ -1,5 +1,7 @@
 package org.photothinik.finance.expense.model.reportselection;
 
+import org.photothinik.finance.expense.model.calendar.MonthOfYear;
+
 public class ReportSelection {
 
     private MonthOfYear monthOfYear;
