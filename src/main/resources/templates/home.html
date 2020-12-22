@@ -8,6 +8,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script th:inline="javascript">
+
+function blurAll(){
+    document.activeElement.blur();
+}
+
 function assignCategory(expenseId) {
 
     var selectObj = document.getElementById('catOverride' + expenseId);
@@ -19,6 +24,7 @@ function assignCategory(expenseId) {
             url: "/api/categoryoverride?expenseid="+expenseId+"&categoryid=" + categoryId,
             cache: false,
             success: function(result){
+                blurAll();
                 alert('Update successful');
             },
             error: function(result){

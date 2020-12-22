@@ -5,6 +5,7 @@ import org.photothinik.finance.expense.model.CategoryPattern;
 import org.photothinik.finance.expense.model.ExpenseRecord;
 import org.photothinik.finance.expense.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class CategoryService {
     @Autowired
     private ExpenseRecordService expenseRecordService;
 
-    public List<Category> getAllCategories() {return this.categoryRepository.findAll();}
+    public List<Category> getAllCategories() {return this.categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));}
 
     public Category getById(long id) {
 
