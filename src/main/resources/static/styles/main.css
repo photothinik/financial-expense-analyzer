@@ -149,7 +149,7 @@ ul.menu a:hover {
     border: 1px solid black;
     border-radius: 3px;
     margin: 2px;
-    font-famiyl: arial;
+    font-family: arial;
 }
 
 .recordItemTrDt {
@@ -177,6 +177,10 @@ ul.menu a:hover {
     width: 15%;
 }
 
+.recordItemLabelInput {
+    width: 75%;
+
+}
 
 .createcategorypanel {
     display: none;

@@ -23,5 +23,6 @@ create table expense_record (
     description varchar(255) not null,
     check_number int,
     amount varchar(15) not null,
-    category_override int
+    category_override int,
+    label varchar(255)
 )

@@ -34,6 +34,12 @@ function assignCategory(expenseId) {
     );
 
 }
+
+function showLabelField(labelFieldId) {
+    alert('Test');
+    var selectObj = document.getElementById('recordLabel' + labelFieldId);
+    selectObj.disabled = false;
+}
     </script>
 
 </head>
@@ -81,7 +87,10 @@ function assignCategory(expenseId) {
 
                         <div class="recordItemTrDt" th:text="${record.transactionDate}" />
 
-                        <div class="recordItemDesc" th:text="${record.description}" />
+                        <div class="recordItemDesc">
+                            <div th:text="${record.description}" />
+                            <input th:id="${'recordLabel'+record.id}" th:attr="onclick=|javascript:showLabelField(${record.id})|" type="text" disabled="disabled" class="recordItemLabelInput" th:value="${record.label}" />
+                        </div>
 
                         <div class="recordItemAmt" th:text="${record.amount}" />
 

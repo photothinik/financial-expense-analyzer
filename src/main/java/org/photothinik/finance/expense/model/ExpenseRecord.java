@@ -32,6 +32,9 @@ public class ExpenseRecord {
     @Column(name = "category_override")
     private Long categoryIdOverride;
 
+    @Column
+    private String label;
+
     public ExpenseRecord() {
     }
 
@@ -81,6 +84,14 @@ public class ExpenseRecord {
 
     public void setCategoryIdOverride(Long categoryIdOverride) {
         this.categoryIdOverride = categoryIdOverride;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     @Override
