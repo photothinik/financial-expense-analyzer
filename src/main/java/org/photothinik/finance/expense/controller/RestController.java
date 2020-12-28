@@ -30,6 +30,18 @@ public class RestController {
         return ResponseEntity.ok(category);
     }
 
+    @PostMapping("/api/expenselabel")
+    public ResponseEntity<?> expenseRecordLabelUpdate(@RequestBody ExpenseRecord expenseRecord) {
+
+        ExpenseRecord er = this.expenseRecordService.getById(expenseRecord.getId());
+
+        er.setLabel((expenseRecord.getLabel() == null || "".equalsIgnoreCase(expenseRecord.getLabel().trim()) ? null : expenseRecord.getLabel()));
+
+        this.expenseRecordService.save(er);
+
+        return ResponseEntity.ok(er);
+    }
+
     @GetMapping("/api/categoryoverride")
     public ResponseEntity<?> expenseCategoryOverride(
             @RequestParam("expenseid") Long expenseId,

@@ -35,10 +35,51 @@ function assignCategory(expenseId) {
 
 }
 
-function showLabelField(labelFieldId) {
-    alert('Test');
-    var selectObj = document.getElementById('recordLabel' + labelFieldId);
-    selectObj.disabled = false;
+function showLabelField(recordId) {
+
+    var addLabelImg = document.getElementById('recordLabelAddImg' + recordId);
+    var recordLabel = document.getElementById('recordLabel' + recordId);
+    var labelInput = document.getElementById('recordLabelInput' + recordId);
+    var labelInputDiv = document.getElementById('recordLabelInputDiv' + recordId);
+
+    if( addLabelImg != null) {
+        addLabelImg.style.display="none";
+    }
+
+    if( recordLabel != null ) {
+        recordLabel.style.display="none";
+    }
+
+    labelInputDiv.style.display="block";
+
+}
+
+function updateLabel(recordId) {
+
+    var updateIcon = document.getElementById('recordLabelUpdateIcon' + recordId);
+    var labelInput = document.getElementById('recordLabelInput' + recordId);
+
+    updateIcon.style.display="inline";
+
+    $.ajax(
+        {
+            type: "POST",
+            contentType: "application/json",
+            data: '{"id":'+recordId+', "label":"'+labelInput.value+'"}',
+            dataType: 'json',
+            url: "/api/expenselabel",
+            cache: false,
+            success: function(result){
+                updateIcon.style.display="none";
+            },
+            error: function(result){
+                alert('Unable to save label. Please try again.');
+                updateIcon.style.display="none";
+            }
+        }
+    );
+
+
 }
     </script>
 
@@ -88,8 +129,19 @@ function showLabelField(labelFieldId) {
                         <div class="recordItemTrDt" th:text="${record.transactionDate}" />
 
                         <div class="recordItemDesc">
-                            <div th:text="${record.description}" />
-                            <input th:id="${'recordLabel'+record.id}" th:attr="onclick=|javascript:showLabelField(${record.id})|" type="text" disabled="disabled" class="recordItemLabelInput" th:value="${record.label}" />
+                            <span th:text="${record.description}" />
+                            <img th:if="${record.label eq null}" th:id="${'recordLabelAddImg'+record.id}" src="../images/pencil-icon.png" class="recordItemLabelAdd" th:src="@{/images/pencil-icon.png}" alt="[Add Label]" title="Add a label" th:attr="onclick=|javascript:showLabelField(${record.id})|"/>
+
+                            <div th:if="${record.label ne null}" th:id="${'recordLabel'+record.id}" class="recordItemLabelSpan" th:attr="onclick=|javascript:showLabelField(${record.id})|">
+                                <img src="../images/tag-icon.png" th:src="@{/images/tag-icon.png}" alt="[Label]" title="Label" />
+                                <span th:text="${record.label}" />
+                            </div>
+                            <div th:id="${'recordLabelInputDiv'+record.id}" class="recordItemLabelInputDiv">
+                                <img src="../images/tag-icon.png" th:src="@{/images/tag-icon.png}" alt="[Label]" title="Label" />
+                                <input th:id="${'recordLabelInput'+record.id}" type="text" class="recordItemLabelInput" th:value="${record.label}" th:attr="onblur=|javascript:updateLabel(${record.id})|" />
+                                <span th:id="${'recordLabelUpdateIcon'+record.id}" class="recordItemLabelUpdateIcon">[Saving...]</span>
+                            </div>
+
                         </div>
 
                         <div class="recordItemAmt" th:text="${record.amount}" />

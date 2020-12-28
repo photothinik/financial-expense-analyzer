@@ -179,7 +179,26 @@ ul.menu a:hover {
 
 .recordItemLabelInput {
     width: 75%;
+}
 
+.recordItemLabelInputDiv {
+
+    display: none;
+}
+
+.recordItemLabelAdd {
+
+}
+
+.recordItemLabelSpan {
+}
+
+.recordItemLabelUpdateIcon {
+    display: none;
+    font-family: arial;
+    font-size: 10pt;
+    font-weight: bold;
+    color: gray;
 }
 
 .createcategorypanel {
