@@ -24,6 +24,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class HomeController {
@@ -157,7 +158,25 @@ public class HomeController {
 
                 model.addAttribute("preview", preview);
 
+                List<ExpenseRecord> allRecords = this.expenseRecordService.getAllExpenseRecords();
+
                 for (ExpenseRecord r : preview.getRecords()) {
+
+                    // Check to see if a record already exists with the same date, description, check number, and amount
+                    boolean duplicateFound = false;
+                    for(ExpenseRecord eRec : allRecords) {
+                        if( this.expenseRecordService.isDuplicate(eRec, r) ) {
+                            // Record already exists
+                            preview.getWarnings().add("Unable to add record because it already exists: " + r.toString());
+                            duplicateFound = true;
+                            break;
+                        }
+                    }
+
+                    if( duplicateFound )
+                        continue;
+
+                    // Save
                     this.expenseRecordService.save(r);
                 }
             } catch(Exception e) {

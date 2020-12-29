@@ -2,6 +2,7 @@ package org.photothinik.finance.expense.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class ExpenseRecord {
@@ -104,5 +105,18 @@ public class ExpenseRecord {
                 ", amount='" + amount + '\'' +
                 ", categoryIdOverride=" + categoryIdOverride +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ExpenseRecord that = (ExpenseRecord) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
