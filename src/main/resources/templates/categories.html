@@ -2,8 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Financial Expense Analyzer</title>
-    <link th:href="@{/styles/main.css}" rel="stylesheet" />
+    <link th:href="@{/styles/categories.css}" rel="stylesheet" />
+    <link th:href="@{/styles/general.css}" rel="stylesheet" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -171,84 +173,101 @@ function categoryNameChanged(catId, objIndex) {
 </head>
 <body>
 
-
-<div style="float: left">
-    <div th:replace="~{fragments/menu :: menu}">Menu</div>
-</div>
-
-<div th:replace="~{fragments/header :: header}">Header</div>
-
-<div class="pagebody">
-    <div class="pageheader">
-        Categories
+    <!-- Header / Masthead -->
+    <div class="row">
+        <div class="col-12">
+            <div th:replace="~{fragments/header :: header}">Header</div>
+        </div>
     </div>
 
-    <form id="categoryCreate" action="#" th:action="@{/categories}" th:object="${newCategory}" method="post" >
-        <div onclick="javascript:createNewCategory()" id="createCategoryPanelButton" class="createCategoryPanelButtonStyle">
-            <img style="cursor: pointer;" src="../images/add-1-icon.png" th:src="@{/images/add-1-icon.png}" alt="[Create New]" title="Create New Category"/>
+    <!-- Main content row -->
+    <div class="row">
+
+        <!-- Menu -->
+        <div class="col-2 col-m-3 col-s-4">
+            <div th:replace="~{fragments/menu :: menu}">Menu</div>
         </div>
 
-        <div id="createCategoryPanel" class="createcategorypanel">
+        <!-- Main Body -->
+        <div class="col-10 col-m-9 col-s-8" style="">
 
-            Name:&nbsp;<input id="newCategoryNameId" type="text" th:field="*{name}" />
-            <button>Create</button>
-        </div>
-    </form>
+            <div class="pagebody">
+                <div class="pageheader">
+                    Categories
+                </div>
 
-    <form id="categoryForm" action="#" th:action="@{/api/categoryupdate}" th:object="${category}" method="post">
+                <form id="categoryCreate" action="#" th:action="@{/categories}" th:object="${newCategory}" method="post" >
+                    <div onclick="javascript:createNewCategory()" id="createCategoryPanelButton" class="createCategoryPanelButtonStyle">
+                        <img style="cursor: pointer;" src="../images/add-1-icon.png" th:src="@{/images/add-1-icon.png}" alt="[Create New]" title="Create New Category"/>
+                    </div>
+
+                    <div id="createCategoryPanel" class="createcategorypanel">
+
+                        Name:&nbsp;<input id="newCategoryNameId" type="text" th:field="*{name}" />
+                        <button>Create</button>
+                    </div>
+                </form>
+
+                <form id="categoryForm" action="#" th:action="@{/api/categoryupdate}" th:object="${category}" method="post">
 
 
 
 
-    <div class="categorymain" th:each="category,iter: ${categories}" th:attr="id=|cat${iter.index}panel|">
-        <div>
+                    <div class="categorymain" th:each="category,iter: ${categories}" th:attr="id=|cat${iter.index}panel|">
+                        <div>
 
-        <input
-                type="hidden"
-                th:attr="id=|cat${category.id}val|,name=|cat${category.id}valname|,value=|${category.name}|"
-        />
-        <div class="categorysubtitle" th:attr="id=|${category.id}_title|" th:text="${category.name}" />
-        <div style="display: none;" th:attr="id=|${category.id}_titleedit|">
-            <input
-                    class="categorysubtitleedittext"
-                    type="text"
-                    th:value="${category.name}"
-                    th:attr="id=|${category.id}_titleedittext|"
-                    th:attrappend="onblur=|javascript:categoryNameChanged(${category.id}, ${iter.index})|"
-            />
-        </div>
+                            <input
+                                    type="hidden"
+                                    th:attr="id=|cat${category.id}val|,name=|cat${category.id}valname|,value=|${category.name}|"
+                            />
+                            <div class="categorysubtitle" th:attr="id=|${category.id}_title|" th:text="${category.name}" />
+                            <div style="display: none;" th:attr="id=|${category.id}_titleedit|">
+                                <input
+                                        class="categorysubtitleedittext"
+                                        type="text"
+                                        th:value="${category.name}"
+                                        th:attr="id=|${category.id}_titleedittext|"
+                                        th:attrappend="onblur=|javascript:categoryNameChanged(${category.id}, ${iter.index})|"
+                                />
+                            </div>
 
-        <div class="categoryedit" th:attr="onclick=|javascript:categoryEditModeOn(${category.id})|">
-            <img src="../images/pencil-icon.png" th:src="@{/images/pencil-icon.png}" alt="[Edit]" title="Edit Category"/>
-        </div>
-        <div class="categoryedit" th:attr="onclick=|javascript:categoryDelete(${category.id}, ${iter.index})|">
-            <img src="../images/trash-empty-icon.png" th:src="@{/images/trash-empty-icon.png}" alt="[Delete]" title="Delete Category"/>
-        </div>
+                            <div class="categoryedit" th:attr="onclick=|javascript:categoryEditModeOn(${category.id})|">
+                                <img src="../images/pencil-icon.png" th:src="@{/images/pencil-icon.png}" alt="[Edit]" title="Edit Category"/>
+                            </div>
+                            <div class="categoryedit" th:attr="onclick=|javascript:categoryDelete(${category.id}, ${iter.index})|">
+                                <img src="../images/trash-empty-icon.png" th:src="@{/images/trash-empty-icon.png}" alt="[Delete]" title="Delete Category"/>
+                            </div>
 
-        <div class="categorypatternsbody">
-            <div class="categorypatterntitle">Patterns:</div>
-            <div>
-                Add Pattern: <input type="text" class="categoryPatternInputText" th:attr="id=|cat${iter.index}newpatterntext|" />
-                <button type="button" th:attr="onclick=|javascript:addCategoryPattern(${category.id}, ${iter.index})|">Add</button>
+                            <div class="categorypatternsbody">
+                                <div class="categorypatterntitle">Patterns:</div>
+                                <div>
+                                    Add Pattern: <input type="text" class="categoryPatternInputText" th:attr="id=|cat${iter.index}newpatterntext|" />
+                                    <button type="button" th:attr="onclick=|javascript:addCategoryPattern(${category.id}, ${iter.index})|">Add</button>
+                                </div>
+
+                                <div th:attr="id=|category${iter.index}patternpanel|">
+                                    <div class="categorypattern" th:each="pattern: ${category.patterns}" th:text="${pattern.pattern}" th:attr="id=|catpatternid${pattern.id}|,onclick=|javascript:deleteCategoryPattern(${pattern.id})|" />
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
             </div>
 
-            <div th:attr="id=|category${iter.index}patternpanel|">
-                <div class="categorypattern" th:each="pattern: ${category.patterns}" th:text="${pattern.pattern}" th:attr="id=|catpatternid${pattern.id}|,onclick=|javascript:deleteCategoryPattern(${pattern.id})|" />
-            </div>
-
         </div>
-
-        </div>
-
     </div>
 
-    </form>
-
-</div>
-
-<div style="clear: both;"></div>
-
-<div th:replace="~{fragments/footer :: footer}">Footer</div>
+    <!-- Footer -->
+    <div class="row">
+        <div class="col-12">
+            <div th:replace="~{fragments/footer :: footer}">Footer</div>
+        </div>
+    </div>
 
 </body>
 </html>

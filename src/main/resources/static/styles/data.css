@@ -1,0 +1,97 @@
+.dataEntryPanel {
+
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+
+
+}
+
+.dataEntryError {
+    font-family: arial;
+    font-size: 10pt;
+    font-weight: bold;
+    color: red;
+}
+
+.dataEntryPanel button {
+    background-color: red;
+    padding: 10px;
+    font-family: arial;
+    font-size: 12pt;
+    font-weight: bold;
+    border: none;
+    border-radius: 3px;
+}
+
+.dataEntryLabel {
+    display: inline-block;
+    font-family: arial;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+@media only screen and (max-width: 600px) {
+    .dataEntryLabel {
+        display: block;
+        margin-bottom: 10px;
+    }
+}
+
+.dataEntryDateOfTr {
+    width: 100px;
+    padding: 5px;
+    font-family: arial;
+    font-size: 12pt;
+}
+
+.dataEntryDesc {
+    width: 200px;
+    padding: 5px;
+    font-family: arial;
+    font-size: 12pt;
+}
+
+.dataEntryCheckNum {
+    width: 50px;
+    padding: 5px;
+    font-family: arial;
+    font-size: 12pt;
+}
+
+.dataEntryAmt {
+    width: 80px;
+    padding: 5px;
+    font-family: arial;
+    font-size: 12pt;
+}
+
+.dataEntryCatOver {
+    width: 200px;
+    padding: 5px;
+    font-family: arial;
+    font-size: 12pt;
+}
+
+.fileUploadSelectPanel {
+    margin-left: 30px;
+    padding: 10px;
+    font-family: arial;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+.fileUploadFileSelect {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.fileUploadSelectInterpreter {
+    margin-bottom: 5px;
+}
+
+.importPreviewPanel {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+

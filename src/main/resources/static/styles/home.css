@@ -1,0 +1,151 @@
+/* BODY */
+.selectTimePeriodPanel select {
+    width: 200px;
+    padding: 5px;
+    font-family: arial;
+    font-size: 12pt;
+}
+
+.selectTimePeriodPanel {
+    font-family: arial;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+/* REPORT VIEW */
+
+.reportPanel {
+    padding-left: 20px;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid black;
+}
+
+.reportErrorsPanel {
+    border-radius: 5px;
+    background-color: rgba(237,28,36,.5);
+    font-family: arial;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+.reportError {
+}
+
+.reportCategoryPanel {
+    width: 100%;
+}
+
+.reportCategoryHeadingRow {
+    color: black;
+    background-color: rgba(112,146,190, 0.5);
+    border-radius: 5px;
+    padding: 8px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-family: arial;
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.reportCategoryHeadingRow:hover {
+    background-color: rgb(112,146,190);
+    color: rgb(255,242,0);
+}
+
+.reportCategoryHeading {
+    display: inline-block;
+    width: 300px;
+}
+
+.reportCategorySubtotalHeading {
+    display: inline-block;
+}
+
+.reportCategoryBody {
+    margin-left: 10px;
+}
+
+.reportCategoryRecordPanel {
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 3px;
+    margin: 2px;
+    font-family: arial;
+}
+
+@media only screen and (max-width: 600px) {
+    .recordItemTrDt {
+        display: block;
+        text-align: center;
+    }
+
+    .recordItemDesc {
+        display: block;
+    }
+
+    .recordItemAmt {
+        display: block;
+        text-align: right;
+    }
+
+    .recordItemChkNum {
+        display: block;
+        text-align: right;
+    }
+
+    .recordItemAssignTo {
+        display: block;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .recordItemTrDt {
+        display: inline-block;
+        width: 10%;
+    }
+
+    .recordItemDesc {
+        display: inline-block;
+        width: 40%;
+    }
+
+    .recordItemAmt {
+        display: inline-block;
+        width: 10%;
+    }
+
+    .recordItemChkNum {
+        display: inline-block;
+        width: 10%;
+    }
+
+    .recordItemAssignTo {
+        display: inline-block;
+        width: 15%;
+    }
+}
+
+.recordItemLabelInput {
+    width: 75%;
+}
+
+.recordItemLabelInputDiv {
+
+    display: none;
+}
+
+.recordItemLabelAdd {
+
+}
+
+.recordItemLabelSpan {
+}
+
+.recordItemLabelUpdateIcon {
+    display: none;
+    font-family: arial;
+    font-size: 10pt;
+    font-weight: bold;
+    color: gray;
+}

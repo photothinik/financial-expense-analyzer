@@ -1,0 +1,107 @@
+.createcategorypanel {
+    display: none;
+}
+
+.createcategorypanel input {
+    width: 200px;
+    padding: 3px;
+    font-family: arial;
+    font-size: 14pt;
+}
+
+.createcategorypanel button {
+    background-color: red;
+    padding: 10px;
+    font-family: arial;
+    font-size: 12pt;
+    font-weight: bold;
+    border: none;
+    border-radius: 3px;
+}
+
+
+
+.categorymain {
+    /*display: inline-block;*/
+    display: block;
+    /*width: 350px;*/
+    width: 100%;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /*border: 5px solid rgb(196,233,242);*/
+    background-color: rgba(196,233,242, 0.5);
+    border: 1px solid rgb(196,233,242);
+    border-radius: 5px;
+    cursor: default;
+}
+
+.categorysubtitle {
+    display: inline;
+    font-family: arial;
+    font-size: 14pt;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.categorysubtitleedittext {
+    width: 250px;
+    padding: 5px;
+    font-family: arial;
+    font-size: 14pt;
+    font-weight: bold;
+    border: 1px solid rgb(221,221,221);
+    border-radius: 3px;
+}
+
+.categoryedit {
+    display: inline;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.categoryedit:hover {
+    /*background-color: rgb(153,217,234);*/
+}
+
+.categorypatternsbody {
+    margin-top: 10px;
+    margin-left: 30px;
+    width: 90%;
+}
+
+.categorypatterntitle {
+    display: block;
+    font-family: arial;
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.categorypattern {
+    border: 1px solid rgb(0,162,232);
+    border-radius: 3px;
+    background-color: rgb(66,199,255);
+    padding: 3px;
+    margin-left: 10px;
+    margin-top: 5px;
+    display: inline-block;
+
+}
+
+.categorypattern:hover {
+    border: 1px solid rgb(0,162,232);
+    background-color: rgb(26,159,255);
+    cursor: pointer;
+}
+
+.categorypatternunverified {
+    border-radius: 3px;
+    padding: 3px;
+    background-color: yellow;
+    margin-left: 10px;
+    margin-top: 5px;
+    display: inline-block;
+
+}

@@ -2,8 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Financial Expense Analyzer</title>
-    <link th:href="@{/styles/main.css}" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Analyzer</title>
+    <link th:href="@{/styles/home.css}" rel="stylesheet" />
+    <link th:href="@{/styles/general.css}" rel="stylesheet" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -86,126 +88,144 @@ function updateLabel(recordId) {
 </head>
 <body>
 
-<div style="float: left">
-    <div th:replace="~{fragments/menu :: menu}">Menu</div>
-</div>
-
-<div th:replace="~{fragments/header :: header}">Header</div>
-
-<div class="pagebody">
-    <div class="pageheader">
-        Summary
-    </div>
-
-    <div class="selectTimePeriodPanel">
-
-        <form id="selectTimePeriod" action="#" th:action="@{/}" th:object="${selectedReport}" method="post" >
-            Select report period:
-            <select class="" th:field="*{monthOfYear}">
-                <option th:each="month : ${availableMonths}" th:value="${month.year + '/' + month.month + '/1'}" th:text="${month.month + '-' + month.year}" />
-            </select>
-            <button type="submit" class="standardButton">Go</button>
-        </form>
-
-    </div>
-
-    <div class="reportPanel">
-        <div th:if="${report ne null}">
-
-            <div class="reportErrorsPanel">
-                <div class="reportError" th:each="warning : ${report.warnings}" th:text="${warning}" />
-            </div>
-
-            <div class="reportCategoryPanel" th:each="map : ${report.expenseRecordsByCategory}">
-
-                <div class="reportCategoryHeadingRow">
-                    <span class="reportCategoryHeading" th:text="${map.key.name}" />
-                    <span class="reportCategorySubtotalHeading" th:text="${report.categoriesBySubtotal.get(map.key)}" />
-                </div>
-
-                <div class="reportCategoryBody">
-                    <div class="reportCategoryRecordPanel" th:each="record : ${map.value}">
-
-                        <div class="recordItemTrDt" th:text="${record.transactionDate}" />
-
-                        <div class="recordItemDesc">
-                            <span th:text="${record.description}" />
-                            <img th:if="${record.label eq null}" th:id="${'recordLabelAddImg'+record.id}" src="../images/pencil-icon.png" class="recordItemLabelAdd" th:src="@{/images/pencil-icon.png}" alt="[Add Label]" title="Add a label" th:attr="onclick=|javascript:showLabelField(${record.id})|"/>
-
-                            <div th:if="${record.label ne null}" th:id="${'recordLabel'+record.id}" class="recordItemLabelSpan" th:attr="onclick=|javascript:showLabelField(${record.id})|">
-                                <img src="../images/tag-icon.png" th:src="@{/images/tag-icon.png}" alt="[Label]" title="Label" />
-                                <span th:text="${record.label}" />
-                            </div>
-                            <div th:id="${'recordLabelInputDiv'+record.id}" class="recordItemLabelInputDiv">
-                                <img src="../images/tag-icon.png" th:src="@{/images/tag-icon.png}" alt="[Label]" title="Label" />
-                                <input th:id="${'recordLabelInput'+record.id}" type="text" class="recordItemLabelInput" th:value="${record.label}" th:attr="onblur=|javascript:updateLabel(${record.id})|" />
-                                <span th:id="${'recordLabelUpdateIcon'+record.id}" class="recordItemLabelUpdateIcon">[Saving...]</span>
-                            </div>
-
-                        </div>
-
-                        <div class="recordItemAmt" th:text="${record.amount}" />
-
-                        <div class="recordItemChkNum" th:text="${record.checkNumber}" />
-
-                        <div class="recordItemAssignTo">
-                            Override Category:
-                            <select th:id="${'catOverride'+record.id}" th:attr="onchange=|javascript:assignCategory(${record.id})|">
-                                <option value="-1">&nbsp;</option>
-                                <option
-                                        th:each="assignCategory : ${categories}"
-                                        th:value="${assignCategory.id}"
-                                        th:text="${assignCategory.name}"
-                                />
-                            </select>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="reportCategoryPanel">
-                <div class="reportCategoryHeadingRow">
-                    <span class="reportCategoryHeading" th:text="${'Uncategorized'}" />
-                    <span class="reportCategorySubtotalHeading" th:text="${report.unmatchedSubtotal}" />
-                </div>
-
-                <div class="reportCategoryBody">
-                    <div class="reportCategoryRecordPanel" th:each="record : ${report.uncategorized}">
-
-                        <div class="recordItemTrDt" th:text="${record.transactionDate}" />
-
-                        <div class="recordItemDesc" th:text="${record.description}" />
-
-                        <div class="recordItemAmt" th:text="${record.amount}" />
-
-                        <div class="recordItemChkNum" th:text="${record.checkNumber}" />
-
-                        <div class="recordItemAssignTo">
-                            Override Category:
-                            <select th:id="${'catOverride'+record.id}" th:attr="onchange=|javascript:assignCategory(${record.id})|">
-                                <option value="-1">&nbsp;</option>
-                                <option
-                                        th:each="assignCategory : ${categories}"
-                                        th:value="${assignCategory.id}"
-                                        th:text="${assignCategory.name}"
-                                />
-                            </select>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
+    <!-- Header / Masthead -->
+    <div class="row">
+        <div class="col-12">
+            <div th:replace="~{fragments/header :: header}">Header</div>
         </div>
     </div>
 
-</div>
+    <!-- Main content row -->
+    <div class="row">
 
-<div style="clear: both;"></div>
+        <!-- Menu -->
+        <div class="col-2 col-m-3 col-s-4">
+            <div th:replace="~{fragments/menu :: menu}">Menu</div>
+        </div>
 
-<div th:replace="~{fragments/footer :: footer}">Footer</div>
+        <!-- Main Body -->
+        <div class="col-10 col-m-9 col-s-8" style="">
+            <div class="pagebody">
+                <div class="pageheader">
+                    Summary
+                </div>
 
+                <div class="selectTimePeriodPanel">
+
+                    <form id="selectTimePeriod" action="#" th:action="@{/}" th:object="${selectedReport}" method="post" >
+                        Select report period:
+                        <select class="" th:field="*{monthOfYear}">
+                            <option th:each="month : ${availableMonths}" th:value="${month.year + '/' + month.month + '/1'}" th:text="${month.month + '-' + month.year}" />
+                        </select>
+                        <button type="submit" class="standardButton">Go</button>
+                    </form>
+
+                </div>
+
+                <div class="reportPanel">
+                    <div th:if="${report ne null}">
+
+                        <div class="reportErrorsPanel">
+                            <div class="reportError" th:each="warning : ${report.warnings}" th:text="${warning}" />
+                        </div>
+
+                        <div class="reportCategoryPanel" th:each="map : ${report.expenseRecordsByCategory}">
+
+                            <div class="reportCategoryHeadingRow">
+                                <span class="reportCategoryHeading" th:text="${map.key.name}" />
+                                <span class="reportCategorySubtotalHeading" th:text="${report.categoriesBySubtotal.get(map.key)}" />
+                            </div>
+
+                            <div class="reportCategoryBody">
+                                <div class="reportCategoryRecordPanel" th:each="record : ${map.value}">
+
+                                    <div class="recordItemTrDt" th:text="${record.transactionDate}" />
+
+                                    <div class="recordItemDesc">
+                                        <span th:text="${record.description}" />
+                                        <img th:if="${record.label eq null}" th:id="${'recordLabelAddImg'+record.id}" src="../images/pencil-icon.png" class="recordItemLabelAdd" th:src="@{/images/pencil-icon.png}" alt="[Add Label]" title="Add a label" th:attr="onclick=|javascript:showLabelField(${record.id})|"/>
+
+                                        <div th:if="${record.label ne null}" th:id="${'recordLabel'+record.id}" class="recordItemLabelSpan" th:attr="onclick=|javascript:showLabelField(${record.id})|">
+                                            <img src="../images/tag-icon.png" th:src="@{/images/tag-icon.png}" alt="[Label]" title="Label" />
+                                            <span th:text="${record.label}" />
+                                        </div>
+                                        <div th:id="${'recordLabelInputDiv'+record.id}" class="recordItemLabelInputDiv">
+                                            <img src="../images/tag-icon.png" th:src="@{/images/tag-icon.png}" alt="[Label]" title="Label" />
+                                            <input th:id="${'recordLabelInput'+record.id}" type="text" class="recordItemLabelInput" th:value="${record.label}" th:attr="onblur=|javascript:updateLabel(${record.id})|" />
+                                            <span th:id="${'recordLabelUpdateIcon'+record.id}" class="recordItemLabelUpdateIcon">[Saving...]</span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="recordItemAmt" th:text="${record.amount}" />
+
+                                    <div class="recordItemChkNum" th:if="${record.checkNumber ne null}" th:text="'Check #' + ${record.checkNumber}" />
+                                    <div class="recordItemChkNum" th:if="${record.checkNumber eq null}" th:text="' '" />
+
+                                    <div class="recordItemAssignTo">
+                                        Override Category:
+                                        <select th:id="${'catOverride'+record.id}" th:attr="onchange=|javascript:assignCategory(${record.id})|">
+                                            <option value="-1">&nbsp;</option>
+                                            <option
+                                                    th:each="assignCategory : ${categories}"
+                                                    th:value="${assignCategory.id}"
+                                                    th:text="${assignCategory.name}"
+                                            />
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="reportCategoryPanel">
+                            <div class="reportCategoryHeadingRow">
+                                <span class="reportCategoryHeading" th:text="${'Uncategorized'}" />
+                                <span class="reportCategorySubtotalHeading" th:text="${report.unmatchedSubtotal}" />
+                            </div>
+
+                            <div class="reportCategoryBody">
+                                <div class="reportCategoryRecordPanel" th:each="record : ${report.uncategorized}">
+
+                                    <div class="recordItemTrDt" th:text="${record.transactionDate}" />
+
+                                    <div class="recordItemDesc" th:text="${record.description}" />
+
+                                    <div class="recordItemAmt" th:text="${record.amount}" />
+
+                                    <div class="recordItemChkNum" th:text="${record.checkNumber}" />
+
+                                    <div class="recordItemAssignTo">
+                                        Override Category:
+                                        <select th:id="${'catOverride'+record.id}" th:attr="onchange=|javascript:assignCategory(${record.id})|">
+                                            <option value="-1">&nbsp;</option>
+                                            <option
+                                                    th:each="assignCategory : ${categories}"
+                                                    th:value="${assignCategory.id}"
+                                                    th:text="${assignCategory.name}"
+                                            />
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="row">
+        <div class="col-12">
+            <div th:replace="~{fragments/footer :: footer}">Footer</div>
+        </div>
+    </div>
 </body>
 </html>
